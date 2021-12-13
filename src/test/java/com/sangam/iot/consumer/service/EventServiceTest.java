@@ -43,6 +43,7 @@ public class EventServiceTest {
         verify(eventRepository, times(1)).findAverage(any(), any(), anyString(), anyLong());
     }
 
+    @Test
     public void findMax_successfully() {
         when(eventService.findMax(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
                 anyLong())).thenReturn(Optional.of(
@@ -53,6 +54,7 @@ public class EventServiceTest {
         verify(eventRepository, times(1)).findMax(any(), any(), anyString(), anyLong());
     }
 
+    @Test
     public void findMin_successfully() {
         when(eventService.findMin(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
                 anyLong())).thenReturn(Optional.of(
@@ -63,12 +65,13 @@ public class EventServiceTest {
         verify(eventRepository, times(1)).findMin(any(), any(), anyString(), anyLong());
     }
 
+    @Test
     public void findMedian_successfully() {
-        when(eventService.findMedian(any(OffsetDateTime.class), any(OffsetDateTime.class),
-                anyString(), anyLong())).thenReturn(Optional.of(
+        when(eventService.findMedian(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
+                anyLong())).thenReturn(Optional.of(
                 BigDecimal.ZERO));
-        Optional<BigDecimal> result = eventService.findMedian(OffsetDateTime.now(),
-                OffsetDateTime.MIN, TEMP_EVENT_TYPE, CLUSTER_ID);
+        Optional<BigDecimal> result = eventService.findMedian(OffsetDateTime.now(), OffsetDateTime.MIN,
+                TEMP_EVENT_TYPE, CLUSTER_ID);
         assertEquals(BigDecimal.ZERO, result.get());
         verify(eventRepository, times(1)).findMedian(any(), any(), anyString(), anyLong());
     }

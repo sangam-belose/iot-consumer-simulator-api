@@ -62,6 +62,10 @@ public class EventServiceImpl implements EventService {
     public Optional<BigDecimal> findMedian(OffsetDateTime fromDate, OffsetDateTime toDate,
             String eventType,
             Long clusterId) {
-        return eventRepository.findMin(fromDate, toDate, eventType, clusterId);
+        Optional<List<BigDecimal>> result =  eventRepository.findMedian(fromDate, toDate, eventType, clusterId);
+        if(result.isPresent() && result.get() != null) {
+            return result.get().stream().findFirst();
+        }
+        return Optional.empty();
     }
 }

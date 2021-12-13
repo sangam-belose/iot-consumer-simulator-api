@@ -28,8 +28,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             + "(:clusterId is null or e.clusterId = :clusterId)")
     Optional<BigDecimal> findMin(OffsetDateTime fromDate, OffsetDateTime toDate, String eventType, Long clusterId);
 
-    @Query(value = "select median(e.value) from Event e where e.timestamp >= :fromDate AND e.timestamp < :toDate AND"
+    @Query(value = "select median(e.value) from Event e where e.creation_time >= :fromDate AND e.creation_time < :toDate AND"
             + " (:eventType is null or e.type = :eventType) AND "
-            + "(:clusterId is null or e.clusterId = :clusterId) order by e.value", nativeQuery = true)
-    Optional<BigDecimal> findMedian(OffsetDateTime fromDate, OffsetDateTime toDate, String eventType, Long clusterId);
+            + "(:clusterId is null or e.cluster_id = :clusterId)", nativeQuery = true)
+    Optional<List<BigDecimal>> findMedian(OffsetDateTime fromDate, OffsetDateTime toDate, String eventType, Long clusterId);
 }
