@@ -31,7 +31,7 @@ public class ConsumerGlobalExceptionHandler {
 
         log.error("Method argument not valid: ", ex);
 
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.add(error.getField() + ": " + error.getDefaultMessage() + " or null");
         }
@@ -56,7 +56,7 @@ public class ConsumerGlobalExceptionHandler {
         ConsumerErrorResponse error = new ConsumerErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.name(), errorMessage);
 
-        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
@@ -64,7 +64,7 @@ public class ConsumerGlobalExceptionHandler {
 
         log.error("Constraint violation : ", ex);
 
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath()
                     + ": "
@@ -77,7 +77,7 @@ public class ConsumerGlobalExceptionHandler {
         error.setMessage(HttpStatus.BAD_REQUEST.name());
         error.setErrors(errors);
 
-        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
@@ -86,12 +86,13 @@ public class ConsumerGlobalExceptionHandler {
 
         log.error("Method argument type mismatch: ", ex);
 
-        String errorMessage = ex.getName() + " should be of type " + ex.getRequiredType().getName();
+        String errorMessage = new StringBuilder().append(ex.getName()).append(" should be of type ")
+                .append(ex.getRequiredType().getName()).toString();
 
         ConsumerErrorResponse error = new ConsumerErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.name(), errorMessage);
 
-        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
@@ -109,7 +110,7 @@ public class ConsumerGlobalExceptionHandler {
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 HttpStatus.METHOD_NOT_ALLOWED.name(), builder.toString());
 
-        return new ResponseEntity<Object>(error, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
@@ -128,7 +129,7 @@ public class ConsumerGlobalExceptionHandler {
                 HttpStatus.UNSUPPORTED_MEDIA_TYPE.name(),
                 builder.substring(0, builder.length() - 2));
 
-        return new ResponseEntity<Object>(error, new HttpHeaders(),
+        return new ResponseEntity<>(error, new HttpHeaders(),
                 HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
@@ -144,7 +145,7 @@ public class ConsumerGlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.name(),
                 "Error in processing request. Try again later!");
 
-        return new ResponseEntity<ConsumerErrorResponse>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 

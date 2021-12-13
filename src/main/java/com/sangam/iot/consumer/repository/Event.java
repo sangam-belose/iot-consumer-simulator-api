@@ -1,7 +1,6 @@
 package com.sangam.iot.consumer.repository;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

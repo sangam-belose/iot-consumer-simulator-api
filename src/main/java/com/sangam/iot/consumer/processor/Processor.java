@@ -34,26 +34,23 @@ public class Processor {
         //Convert input json to IotEvent object using Object Mapper
         KStream<Long, IotEvent> orderObjects
                 = eventInput.mapValues(
-                new ValueMapper<String, IotEvent>() {
-                    @Override
-                    public IotEvent apply(String inputJson) {
+                inputJson -> {
 
-                        try {
-                            String payload = inputJson.split("\\.")[0];
-                            String decodedMessage = new String(Base64.decodeBase64(payload));
-                            IotEvent order =
-                                    objectMapper.readValue(
-                                            decodedMessage,
-                                            IotEvent.class);
+                    try {
+                        String payload = inputJson.split("\\.")[0];
+                        String decodedMessage = new String(Base64.decodeBase64(payload));
+                        IotEvent order =
+                                objectMapper.readValue(
+                                        decodedMessage,
+                                        IotEvent.class);
 
-                            eventService.saveEvent(order);
-                            return order;
-                        } catch (Exception e) {
-                            log.error("ERROR : Cannot convert JSON "
-                                    + inputJson);
-                            e.printStackTrace();
-                            return null;
-                        }
+                        eventService.saveEvent(order);
+                        return order;
+                    } catch (Exception e) {
+                        log.error("ERROR : Cannot convert JSON "
+                                + inputJson);
+                        e.printStackTrace();
+                        return null;
                     }
                 }
         );
