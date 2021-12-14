@@ -1,0 +1,16 @@
+version: '3'
+services:
+  consumer-api:
+    build:
+        dockerfile: docker/Dockerfile
+        context: .
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+networks:
+  default:
+    external: true
+    name: iot-producer-simulator-api_kafka-network
