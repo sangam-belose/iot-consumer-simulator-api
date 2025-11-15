@@ -8,7 +8,7 @@ on:
 
       steps:
         - name: trigger dependabot refresh
-          run: | 
+          run: |
             gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
@@ -16,7 +16,7 @@ on:
             -f package-ecosystem='maven' \
             -f directory='/' \
             -f target-branch='master'
-            
+
           env:
             GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
             
