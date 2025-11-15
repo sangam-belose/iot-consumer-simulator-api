@@ -2,14 +2,14 @@ name: Manual trigger dependabot.yml
 on:
   workflow_dispatch:
 
-  jobs:
-    trigger:
-      runs-on: ubuntu-latest
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: trigger dependabot refresh
-          run: |
-            gh api \
+    steps:
+      - name: trigger dependabot refresh
+        run: |
+          gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             /repos/${{ github.repository }}/dependabot/updates \
@@ -17,6 +17,6 @@ on:
             -f directory='/' \
             -f target-branch='master'
 
-          env:
-            GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
             
