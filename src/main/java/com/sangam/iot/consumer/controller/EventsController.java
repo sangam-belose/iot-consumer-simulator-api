@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/events")
 @Slf4j
@@ -39,10 +42,10 @@ public class EventsController {
                 clusterId);
 
         if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         }
-        log.info("avgResult: " + result.get());
-        return ResponseEntity.ok(result.get());
+        log.info("avgResult: {}", result.get());
+        return ok(result.get());
     }
 
     @GetMapping("/max")
@@ -54,10 +57,10 @@ public class EventsController {
         Optional<BigDecimal> result = eventService.findMax(fromDate, toDate, eventType, clusterId);
 
         if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         }
-        log.info("maxResult: " + result.get());
-        return ResponseEntity.ok(result.get());
+        log.info("maxResult: {}", result.get());
+        return ok(result.get());
     }
 
     @GetMapping("/min")
@@ -69,10 +72,10 @@ public class EventsController {
         Optional<BigDecimal> result = eventService.findMin(fromDate, toDate, eventType, clusterId);
 
         if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         }
-        log.info("minResult: " + result.get());
-        return ResponseEntity.ok(result.get());
+        log.info("minResult: {}", result.get());
+        return ok(result.get());
     }
 
     @GetMapping("/median")
@@ -85,10 +88,10 @@ public class EventsController {
                 clusterId);
 
         if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         }
-        log.info("medianResult: " + result.get());
-        return ResponseEntity.ok(result.get());
+        log.info("medianResult: {}", result.get());
+        return ok(result.get());
     }
 
 }

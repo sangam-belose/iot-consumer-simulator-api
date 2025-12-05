@@ -1,6 +1,6 @@
 package com.sangam.iot.consumer.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -12,29 +12,29 @@ import com.sangam.iot.consumer.repository.EventRepository;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import com.sangam.iot.consumer.service.impl.EventServiceImpl;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
 public class EventServiceTest {
 
     private static final String TEMP_EVENT_TYPE = "TEMPERATURE";
-    private static final long CLUSTER_ID = 1l;
+    private static final long CLUSTER_ID = 1L;
 
-    @MockBean
+    @Mock
     private EventRepository eventRepository;
 
-    @Autowired
-    private EventService eventService;
+    @InjectMocks
+    private EventServiceImpl eventService;
 
     @Test
     public void findAverage_successfully() {
-        when(eventService.findAverage(any(OffsetDateTime.class), any(OffsetDateTime.class),
+        when(eventRepository.findAverage(any(OffsetDateTime.class), any(OffsetDateTime.class),
                 anyString(), anyLong())).thenReturn(Optional.of(
                 BigDecimal.TEN));
         Optional<BigDecimal> result = eventService.findAverage(OffsetDateTime.now(),
@@ -45,7 +45,7 @@ public class EventServiceTest {
 
     @Test
     public void findMax_successfully() {
-        when(eventService.findMax(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
+        when(eventRepository.findMax(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
                 anyLong())).thenReturn(Optional.of(
                 BigDecimal.ONE));
         Optional<BigDecimal> result = eventService.findMax(OffsetDateTime.now(), OffsetDateTime.MAX,
@@ -56,7 +56,7 @@ public class EventServiceTest {
 
     @Test
     public void findMin_successfully() {
-        when(eventService.findMin(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
+        when(eventRepository.findMin(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
                 anyLong())).thenReturn(Optional.of(
                 BigDecimal.ZERO));
         Optional<BigDecimal> result = eventService.findMin(OffsetDateTime.now(), OffsetDateTime.MIN,
@@ -67,7 +67,7 @@ public class EventServiceTest {
 
     @Test
     public void findMedian_successfully() {
-        when(eventService.findMedian(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
+        when(eventRepository.findMedian(any(OffsetDateTime.class), any(OffsetDateTime.class), anyString(),
                 anyLong())).thenReturn(Optional.of(
                 BigDecimal.ZERO));
         Optional<BigDecimal> result = eventService.findMedian(OffsetDateTime.now(), OffsetDateTime.MIN,

@@ -9,9 +9,10 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static java.util.Base64.getDecoder;
 
 @Component
 @Slf4j
@@ -37,7 +38,7 @@ public class Processor {
 
                     try {
                         String payload = inputJson.split("\\.")[0];
-                        String decodedMessage = new String(Base64.decodeBase64(payload));
+                        String decodedMessage = new String(getDecoder().decode(payload));
                         IotEvent order =
                                 objectMapper.readValue(
                                         decodedMessage,
@@ -46,8 +47,7 @@ public class Processor {
                         eventService.saveEvent(order);
                         return order;
                     } catch (Exception e) {
-                        log.error("ERROR : Cannot convert JSON "
-                                + inputJson);
+                        log.error("ERROR : Cannot convert JSON {}", inputJson);
                         e.printStackTrace();
                         return null;
                     }
@@ -57,7 +57,7 @@ public class Processor {
         //Print objects received
         orderObjects.peek(
                 (key, value) ->
-                        log.info("Received Event : " + value)
+                        log.info("Received Event : {}", value)
         );
 
     }

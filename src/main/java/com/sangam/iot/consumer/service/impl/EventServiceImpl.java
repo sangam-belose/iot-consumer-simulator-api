@@ -8,22 +8,23 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     @Override
     public void saveEvent(IotEvent iotEvent) {
         Event event = new Event();
         event.setSensorId(iotEvent.getId());
-        event.setClusterId(Long.valueOf(iotEvent.getClusterId()));
+        event.setClusterId(Long.parseLong(iotEvent.getClusterId()));
         event.setName(iotEvent.getName());
         event.setType(iotEvent.getType());
         event.setValue(iotEvent.getValue());
