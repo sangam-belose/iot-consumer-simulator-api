@@ -1,6 +1,5 @@
 package com.sangam.iot.consumer.processor;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sangam.iot.consumer.model.IotEvent;
 import com.sangam.iot.consumer.service.EventService;
