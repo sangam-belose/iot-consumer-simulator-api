@@ -1,5 +1,6 @@
 package com.sangam.iot.consumer.controller;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -7,19 +8,17 @@ import com.sangam.iot.consumer.service.EventService;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(EventsController.class)
 public class EventControllerTest {
 
     private static final String AVG_EVENT_URL = "/events/average";
@@ -28,12 +27,12 @@ public class EventControllerTest {
     private static final String MEDIAN_EVENT_URL = "/events/median";
 
     private static final String TEMP_EVENT_TYPE = "TEMPERATURE";
-    private static final long CLUSTER_ID = 1l;
+    private static final long CLUSTER_ID = 1L;
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private EventService eventService;
 
     @Test
@@ -44,7 +43,7 @@ public class EventControllerTest {
         OffsetDateTime toDate = OffsetDateTime.now();
         OffsetDateTime fromDate = toDate.minusMinutes(2);
 
-        Mockito.when(eventService.findAverage(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
+        when(eventService.findAverage(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
                 .thenReturn(
                         Optional.of(avg));
 
@@ -66,7 +65,7 @@ public class EventControllerTest {
         OffsetDateTime toDate = OffsetDateTime.now();
         OffsetDateTime fromDate = toDate.minusMinutes(2);
 
-        Mockito.when(eventService.findMax(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
+        when(eventService.findMax(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
                 .thenReturn(
                         Optional.of(max));
 
@@ -88,7 +87,7 @@ public class EventControllerTest {
         OffsetDateTime toDate = OffsetDateTime.now();
         OffsetDateTime fromDate = toDate.minusMinutes(2);
 
-        Mockito.when(eventService.findMin(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
+        when(eventService.findMin(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
                 .thenReturn(
                         Optional.of(min));
 
@@ -110,7 +109,7 @@ public class EventControllerTest {
         OffsetDateTime toDate = OffsetDateTime.now();
         OffsetDateTime fromDate = toDate.minusMinutes(2);
 
-        Mockito.when(eventService.findMedian(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
+        when(eventService.findMedian(fromDate, toDate, TEMP_EVENT_TYPE, CLUSTER_ID))
                 .thenReturn(
                         Optional.of(median));
 

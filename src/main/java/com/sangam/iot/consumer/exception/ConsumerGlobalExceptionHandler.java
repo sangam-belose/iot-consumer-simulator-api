@@ -3,8 +3,10 @@ package com.sangam.iot.consumer.exception;
 import com.sangam.iot.consumer.model.ConsumerErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import java.util.Objects;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -86,8 +88,8 @@ public class ConsumerGlobalExceptionHandler {
 
         log.error("Method argument type mismatch: ", ex);
 
-        String errorMessage = new StringBuilder().append(ex.getName()).append(" should be of type ")
-                .append(ex.getRequiredType().getName()).toString();
+        String errorMessage = ex.getName() + " should be of type " +
+                Objects.requireNonNull(ex.getRequiredType()).getName();
 
         ConsumerErrorResponse error = new ConsumerErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.name(), errorMessage);
