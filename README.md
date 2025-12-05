@@ -4,10 +4,10 @@ Project to simulate IoT sensor consuming events from a Kafka cluster.
 
 ## Technologies
 
-- **[Spring boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)** - 2.6.1
+- **[Spring boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)** - 4.0.0
 - **[Maven](https://maven.apache.org/)** - 4.0
 - **[H2](https://www.h2database.com/html/main.html)**
-- Java 11
+- Java 21
 - Kafka
 
 ## Getting Started
@@ -16,7 +16,7 @@ Project to simulate IoT sensor consuming events from a Kafka cluster.
 
 - Docker
     - Needed in case you want to run consumer app using docker.
-- Java 11
+- Java 21
     - for local run of the project.
 
 ### Building
