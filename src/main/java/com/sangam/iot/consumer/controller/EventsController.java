@@ -1,6 +1,6 @@
 package com.sangam.iot.consumer.controller;
 
-import com.sangam.iot.consumer.repository.Event;
+import com.sangam.iot.consumer.model.IotEvent;
 import com.sangam.iot.consumer.service.EventService;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -28,7 +28,7 @@ public class EventsController {
     private EventService eventService;
 
     @GetMapping("/all")
-    public List<Event> getAllEvents() {
+    public List<IotEvent> getAllEvents() {
         return eventService.getAllEvents();
     }
 

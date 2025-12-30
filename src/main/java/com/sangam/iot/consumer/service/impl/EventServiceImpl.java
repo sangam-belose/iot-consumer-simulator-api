@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -34,8 +36,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+    public List<IotEvent> getAllEvents() {
+        return eventRepository.findAll()
+                .stream().map( event -> new IotEvent(
+                        (int) event.getId(), event.getType(), event.getName(), String.valueOf(event.getClusterId()), event.getTimestamp(), event.getValue(), true
+                )
+                ).collect(toList());
     }
 
     @Override

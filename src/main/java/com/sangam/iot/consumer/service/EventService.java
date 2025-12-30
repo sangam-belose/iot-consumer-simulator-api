@@ -1,7 +1,7 @@
 package com.sangam.iot.consumer.service;
 
 import com.sangam.iot.consumer.model.IotEvent;
-import com.sangam.iot.consumer.repository.Event;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -11,7 +11,7 @@ public interface EventService {
 
     void saveEvent(IotEvent iotEvent);
 
-    List<Event> getAllEvents();
+    List<IotEvent> getAllEvents();
 
     Optional<BigDecimal> findAverage(OffsetDateTime fromDate, OffsetDateTime toDate, String eventType,
             Long clusterId);

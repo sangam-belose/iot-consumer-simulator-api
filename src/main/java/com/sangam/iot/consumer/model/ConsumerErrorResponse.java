@@ -1,6 +1,5 @@
 package com.sangam.iot.consumer.model;
 
-import java.util.Arrays;
 import java.util.List;
 import lombok.Data;
 
@@ -26,7 +25,7 @@ public class ConsumerErrorResponse {
         super();
         this.errorCode = errorCode;
         this.message = message;
-        errors = Arrays.asList(error);
+        errors = List.of(error);
     }
 
 }
